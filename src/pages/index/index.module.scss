@@ -1,6 +1,14 @@
 @use '@/styles/variables.scss' as *;
 
 .page { padding: 18rpx 24rpx 64rpx; min-height: 100vh; }
+.homeHeader { display:flex; align-items:center; justify-content:space-between; width:100%; height:72rpx; }
+.hotLink { display:inline-flex; align-items:center; gap:6rpx; height:56rpx; padding:0 16rpx; border:1rpx solid #f2ded5; border-radius:18rpx; color:#b54a3e; background:linear-gradient(135deg,#fff0e9,#fff8e9); font-size:26rpx; font-weight:700; box-sizing:border-box; }
+.hotSpark { color:#ed7751; font-size:27rpx; line-height:1; }
+.hotBadge { padding:3rpx 6rpx; border-radius:8rpx; color:#fff; background:#ee725b; font-size:16rpx; font-weight:800; line-height:1.1; }
+.headerSearch { display:flex; align-items:center; justify-content:center; width:64rpx; height:64rpx; }
+.headerSearchIcon { position:relative; width:34rpx; height:34rpx; }
+.headerSearchIcon::before { position:absolute; top:2rpx; left:2rpx; width:20rpx; height:20rpx; box-sizing:border-box; border:3rpx solid $color-text-primary; border-radius:50%; content:''; }
+.headerSearchIcon::after { position:absolute; right:2rpx; bottom:4rpx; width:12rpx; height:3rpx; border-radius:2rpx; background:$color-text-primary; content:''; transform:rotate(45deg); transform-origin:center; }
 .searchRow { display:flex; align-items:center; width:100%; height:84rpx; box-sizing:border-box; }
 .introBlock { margin:24rpx 0 20rpx; }
 .intro { display:block; font-size:36rpx; line-height:1.35; font-weight:700; }
@@ -14,10 +22,6 @@
 .chip { display:inline-block; min-height:60rpx; padding:14rpx 20rpx; margin-right:8rpx; border:0; border-radius:0; font-size:26rpx; color:$color-text-secondary; position:relative; }
 .active { color:$color-text-primary; font-weight:700; background:transparent; }
 .active::after { content:''; position:absolute; left:50%; bottom:-3rpx; width:36rpx; height:6rpx; transform:translateX(-50%); border-radius:6rpx; background:$color-primary; }
-.hotChip { position:relative; display:inline-flex; align-items:center; vertical-align:top; gap:6rpx; height:60rpx; margin-right:8rpx; padding:0 16rpx; border-radius:16rpx; color:#b54a3e; background:linear-gradient(135deg,#fff0e9,#fff8e9); font-size:24rpx; font-weight:700; }
-.hotChip::after { position:absolute; right:50%; bottom:-3rpx; width:40rpx; height:5rpx; border-radius:8rpx; background:$color-primary; content:''; transform:translateX(50%); }
-.hotSpark { color:#ed7751; font-size:26rpx; line-height:1; }
-.hotBadge { padding:3rpx 6rpx; border-radius:8rpx; color:#fff; background:#ee725b; font-size:16rpx; font-weight:800; line-height:1.1; }
 .trending { margin:0 0 26rpx; background:#fff; border-radius:14rpx; padding:20rpx; box-shadow:0 5rpx 20rpx rgba(0,0,0,.035); }
 .trendingHead { display:flex; align-items:center; justify-content:space-between; margin-bottom:14rpx; }
 .trendingTitle { font-size:28rpx; font-weight:700; }

@@ -10,6 +10,7 @@ import styles from './index.module.scss';
 const Index: React.FC = () => {
   const [type, setType] = React.useState('');
   const [keyword, setKeyword] = React.useState('');
+  const [searchOpen, setSearchOpen] = React.useState(false);
   const resource = usePaged((page, size) => api.list(page, size, type), type, 10);
   const rank = useResource(() => api.ranks());
   const intro = {
@@ -29,13 +30,14 @@ const Index: React.FC = () => {
 
   return (
     <View className={styles.page}>
-      <View className={styles.searchRow}>
-        <View className={styles.search}><Input value={keyword} onInput={(e) => setKeyword(e.detail.value)} placeholder="搜索动态、同学或专业" confirmType="search" /><View className={styles.searchIcon} /></View>
+      <View className={styles.homeHeader}>
+        <View className={styles.hotLink} onClick={() => Taro.navigateTo({ url: '/pages/rank/index' })}><Text className={styles.hotSpark}>✦</Text><Text>热榜</Text><Text className={styles.hotBadge}>HOT</Text></View>
+        <View className={styles.headerSearch} onClick={() => setSearchOpen((open) => !open)} aria-label="搜索"><View className={styles.headerSearchIcon} /></View>
       </View>
-      <ScrollView scrollX className={styles.categories}>
-        {categories.map((item) => <Text key={item.value} className={`${styles.chip} ${type === item.value ? styles.active : ''}`} onClick={() => setType(item.value)}>{item.label}</Text>)}
-        <View className={styles.hotChip} onClick={() => Taro.navigateTo({ url: '/pages/rank/index' })}><Text className={styles.hotSpark}>✦</Text><Text>热榜</Text><Text className={styles.hotBadge}>HOT</Text></View>
-      </ScrollView>
+      {searchOpen && <View className={styles.searchRow}>
+        <View className={styles.search}><Input focus value={keyword} onInput={(e) => setKeyword(e.detail.value)} placeholder="搜索动态、同学或专业" confirmType="search" /><View className={styles.searchIcon} /></View>
+      </View>}
+      <ScrollView scrollX className={styles.categories}>{categories.map((item) => <Text key={item.value} className={`${styles.chip} ${type === item.value ? styles.active : ''}`} onClick={() => setType(item.value)}>{item.label}</Text>)}</ScrollView>
       <View className={styles.introBlock}><Text className={styles.intro}>{intro.title}</Text><Text className={styles.introSub}>{intro.copy}</Text></View>
       {rank.data?.length ? <View className={styles.trending}><View className={styles.trendingHead}><Text className={styles.trendingTitle}>校园热榜</Text><Text className={styles.trendingMore} onClick={() => Taro.navigateTo({ url: '/pages/rank/index' })}>查看全部 ›</Text></View><ScrollView scrollX className={styles.trendingList}>{rank.data.slice(0, 5).map((snap, index) => <View className={styles.trendingItem} key={snap.snapId} onClick={() => Taro.navigateTo({ url: `/pages/detail/index?id=${snap.snapId}` })}><Text className={styles.trendingNumber}>{String(index + 1).padStart(2, '0')}</Text><Text className={styles.trendingTag}>{categoryName(snap.type)}</Text><Text className={styles.trendingDesc}>{snap.desc}</Text><Text className={styles.trendingMeta}>{snap.userName} · {formatTime(snap.ctime)}</Text></View>)}</ScrollView></View> : null}
       {resource.error && <View className={styles.error}><Text>{resource.error}</Text><Text onClick={() => resource.reload()}>重试</Text></View>}
