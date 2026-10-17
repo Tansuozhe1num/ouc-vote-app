@@ -1,0 +1,13 @@
+@use '@/styles/variables.scss' as *;
+.card { background: #fff; overflow: hidden; min-width: 0; &:active { opacity: .8; } }
+.image, .fallback { width: 100%; height: 300rpx; border-radius: 14rpx; background: #f0f0f0; }
+.fallback { display:flex; align-items:center; justify-content:center; flex-direction:column; color:#d9d9d9; font-size:34rpx; font-weight:800; letter-spacing:4rpx; background:linear-gradient(145deg,#f9f9f9,#ededed); }
+.content { padding: 16rpx 4rpx 0; }
+.description { display: block; font-weight: 600; font-size: 27rpx; line-height: 1.55; margin: 0 0 14rpx; word-break: break-word; @include text-ellipsis-multi(2); }
+.person { display: flex; align-items: center; gap: 8rpx; min-width: 0; }
+.avatar { flex-shrink: 0; width: 34rpx; height: 34rpx; background: #f8dfe3; border-radius: 50%; font-size: 19rpx; display: flex; justify-content: center; align-items: center; color: $color-primary-dark; }
+.name { font-size: 22rpx; color: $color-text-secondary; @include text-ellipsis; }
+.foot { display:flex; align-items:center; min-width:0; margin-top:10rpx; color:$color-text-tertiary; font-size:20rpx; gap:8rpx; }
+.meta { max-width:150rpx; @include text-ellipsis; }
+.type { color:$color-primary; font-size:19rpx; }
+.time { margin-left:auto; font-size:19rpx; }

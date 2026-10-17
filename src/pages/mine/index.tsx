@@ -1,0 +1,11 @@
+import React from 'react';
+import { Button, Text, View } from '@tarojs/components';
+import Taro, { usePullDownRefresh } from '@tarojs/taro';
+import { usePaged, useResource } from '@/hooks/useResource';
+import { api } from '@/services/api';
+import { getUser, hasSession, requireLogin } from '@/services/session';
+import SnapCard from '@/components/SnapCard';
+import styles from './index.module.scss';
+export default function Mine() { const [user, setUser] = React.useState(getUser()); const me = useResource(() => api.me(), hasSession() ? 'yes' : 'no'); const snaps = usePaged((page, size) => api.mine(page, size), hasSession() ? 'yes' : 'no', 8); React.useEffect(() => { if (me.data) setUser(me.data); }, [me.data]); usePullDownRefresh(() => Promise.all([me.reload(), snaps.reload()]).finally(() => Taro.stopPullDownRefresh())); if (!hasSession()) return <View className={styles.page}><View className={styles.hero}><Text className={styles.avatar}>?</Text><Text className={styles.title}>还没有登录</Text><Text className={styles.sub}>登录后管理你的动态和个人资料。</Text><Button className={styles.button} onClick={() => requireLogin()}>登录 / 注册</Button><Button className={styles.secondary} onClick={() => Taro.navigateTo({ url: '/pages/settings/index' })}>配置服务地址</Button></View></View>; return <View className={styles.page}><View className={styles.hero}><View className={styles.row}><Text className={styles.avatar}>{(user?.name || '同')[0]}</Text><View><Text className={styles.title}>{user?.name || '同学'}</Text><Text className={styles.sub}>{user?.major || '校园同学'}</Text></View></View><Text className={styles.bio}>{user?.description || '写一句介绍，让大家更了解你。'}</Text><View className={styles.actions}><Button className={styles.secondary} onClick={() => Taro.navigateTo({ url: '/pages/profile/index?mine=1' })}>编辑资料</Button><Button className={styles.secondary} onClick={() => Taro.navigateTo({ url: '/pages/settings/index' })}>服务设置</Button></View></View><Text className={styles.heading}>我的动态</Text>{snaps.error && <Text className={styles.error}>{snaps.error}</Text>}<View className={styles.grid}>{snaps.data.map((snap) => <SnapCard key={snap.snapId} snap={snap} />)}</View>{!snaps.loading && !snaps.data.length && <View className={styles.empty}>还没有发布动态</View>}</View>; }
+
+

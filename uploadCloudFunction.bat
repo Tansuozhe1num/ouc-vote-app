@@ -1,0 +1,1 @@
+"D:\微信小程序开发\开发者工具\微信web开发者工具\cli.bat" cloud functions deploy --e cloud1-2gp7u2ai8a274cce --n quickstartFunctions --r --project "D:\ttemp\vote-app" --report_first --report

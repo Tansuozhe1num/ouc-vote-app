@@ -1,0 +1,25 @@
+@use '@/styles/variables.scss' as *;
+.page { padding: 34rpx 32rpx 90rpx; min-height: 100vh; overflow:hidden; background:#fbf9f7; }
+.copy { position:relative; z-index:3; }
+.eyebrow { display:block; margin-bottom:14rpx; color:$color-primary; font-size:20rpx; font-weight:700; letter-spacing:3rpx; }
+.title { display:block; color:#29221f; font-family:Georgia,serif; font-size:48rpx; font-weight:500; line-height:1.14; white-space:pre-line; }
+.subtitle { display:block; max-width:520rpx; margin-top:18rpx; color:#837771; font-size:25rpx; line-height:1.7; }
+.drawButton { display:flex; align-items:center; justify-content:space-between; width:100%; height:92rpx; margin-top:30rpx; padding:0 24rpx; border:0; border-radius:14rpx; color:#fff; background:$color-primary; box-shadow:0 14rpx 32rpx rgba(255,36,66,.2); font-size:27rpx; font-weight:700; }
+.drawButton::after { border:0; }.drawStar { font-size:28rpx; }.drawArrow { font-size:36rpx; font-weight:400; }.footnote { display:block; max-width:520rpx; margin-top:14rpx; color:#b2a8a2; font-size:20rpx; line-height:1.5; }
+.stage { position:relative; display:flex; min-height:760rpx; align-items:center; justify-content:center; margin-top:8rpx; }
+.orbit { position:absolute; border:1rpx solid #f0d9d1; border-radius:50%; animation:orbitSpin 18s linear infinite; }
+.orbit::after { position:absolute; width:16rpx; height:16rpx; border-radius:50%; content:''; background:$color-primary; box-shadow:0 0 0 10rpx rgba(255,36,66,.1); }
+.orbitOne { width:640rpx; height:640rpx; }.orbitOne::after { top:22%; right:-8rpx; }
+.orbitTwo { width:500rpx; height:500rpx; border-color:#ebdfc2; animation-direction:reverse; animation-duration:25s; }.orbitTwo::after { bottom:12%; left:-8rpx; background:#e3b942; box-shadow:0 0 0 10rpx rgba(227,185,66,.14); }
+.drawCard { position:relative; z-index:2; width:560rpx; overflow:hidden; border-radius:24rpx; background:#fff; box-shadow:0 30rpx 76rpx rgba(60,41,32,.16); animation:cardFloat 4.5s ease-in-out infinite; transition:transform .3s ease; }
+.drawing { animation:cardShuffle .8s ease-in-out infinite; }.ready { animation:cardReveal .6s both,cardFloat 4.5s ease-in-out 0.6s infinite; }
+.cardArt { display:flex; width:100%; height:300rpx; align-items:center; justify-content:center; color:#cf7764; background:#f8dfd5; font-size:90rpx; }.cardReady { background:#e2f0eb; color:#579c84; }
+.cardContent { padding:24rpx 28rpx 28rpx; }.typeLabel { display:inline-block; padding:7rpx 12rpx; border-radius:6rpx; color:$color-primary-dark; background:$color-primary-light; font-size:20rpx; font-weight:700; }
+.cardTitle { display:-webkit-box; margin:18rpx 0 10rpx; overflow:hidden; color:#29221f; font-family:Georgia,serif; font-size:30rpx; font-weight:500; line-height:1.5; -webkit-line-clamp:2; -webkit-box-orient:vertical; }
+.cardDesc { display:block; min-height:58rpx; margin-bottom:20rpx; color:#837771; font-size:23rpx; line-height:1.6; }
+.person { display:flex; align-items:center; gap:14rpx; padding-top:18rpx; border-top:1rpx solid #f0ece9; }.avatar { display:flex; width:68rpx; height:68rpx; flex-shrink:0; align-items:center; justify-content:center; border-radius:50%; color:#a44f35; background:#f9e1d3; font-size:28rpx; }.personCopy { display:flex; min-width:0; flex:1; flex-direction:column; }.personName { overflow:hidden; color:#302b29; font-size:24rpx; font-weight:700; text-overflow:ellipsis; white-space:nowrap; }.personMajor { overflow:hidden; margin-top:5rpx; color:#a39991; font-size:20rpx; text-overflow:ellipsis; white-space:nowrap; }.chat { display:flex; width:64rpx; height:64rpx; min-height:64rpx; align-items:center; justify-content:center; margin:0 0 0 auto; border:0; border-radius:50%; color:#fff; background:#29221f; font-size:30rpx; }.chat::after { border:0; }.chat[disabled] { opacity:.3; }
+.floatNote { position:absolute; z-index:3; padding:14rpx 18rpx; border-radius:10rpx; color:#80655d; background:#fff; box-shadow:0 10rpx 28rpx rgba(60,41,32,.1); font-size:20rpx; }.noteA { top:17%; left:-4rpx; transform:rotate(-7deg); }.noteB { right:-4rpx; bottom:14%; transform:rotate(6deg); }
+@keyframes orbitSpin { to { transform:rotate(360deg); } }
+@keyframes cardFloat { 0%,100% { transform:translateY(0) rotate(-1deg); } 50% { transform:translateY(-12rpx) rotate(1deg); } }
+@keyframes cardShuffle { 0%,100% { transform:translateX(0) rotate(0); } 25% { transform:translateX(-12rpx) rotate(-2deg); } 75% { transform:translateX(12rpx) rotate(2deg); } }
+@keyframes cardReveal { from { opacity:.5; transform:scale(.9) rotate(5deg); } to { opacity:1; transform:scale(1) rotate(0); } }
