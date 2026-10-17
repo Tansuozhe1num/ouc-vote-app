@@ -39,7 +39,24 @@ const Index: React.FC = () => {
       </View>}
       <ScrollView scrollX className={styles.categories}>{categories.map((item) => <Text key={item.value} className={`${styles.chip} ${type === item.value ? styles.active : ''}`} onClick={() => setType(item.value)}>{item.label}</Text>)}</ScrollView>
       <View className={styles.introBlock}><Text className={styles.intro}>{intro.title}</Text><Text className={styles.introSub}>{intro.copy}</Text></View>
-      {rank.data?.length ? <View className={styles.trending}><View className={styles.trendingHead}><Text className={styles.trendingTitle}>校园热榜</Text><Text className={styles.trendingMore} onClick={() => Taro.navigateTo({ url: '/pages/rank/index' })}>查看全部 ›</Text></View><ScrollView scrollX className={styles.trendingList}>{rank.data.slice(0, 5).map((snap, index) => <View className={styles.trendingItem} key={snap.snapId} onClick={() => Taro.navigateTo({ url: `/pages/detail/index?id=${snap.snapId}` })}><Text className={styles.trendingNumber}>{String(index + 1).padStart(2, '0')}</Text><Text className={styles.trendingTag}>{categoryName(snap.type)}</Text><Text className={styles.trendingDesc}>{snap.desc}</Text><Text className={styles.trendingMeta}>{snap.userName} · {formatTime(snap.ctime)}</Text></View>)}</ScrollView></View> : null}
+      {rank.data?.length ? <View className={styles.trending}>
+        <View className={styles.trendingHead}>
+          <View><Text className={styles.trendingKicker}>CAMPUS TRENDING</Text><View className={styles.trendingTitleRow}><Text className={styles.trendingTitle}>校园热榜</Text><Text className={styles.trendingLive}><Text className={styles.trendingLiveDot} />实时</Text></View></View>
+          <Text className={styles.trendingMore} onClick={() => Taro.navigateTo({ url: '/pages/rank/index' })}>完整榜单 <Text className={styles.trendingArrow}>›</Text></Text>
+        </View>
+        <ScrollView scrollY enhanced showScrollbar={false} className={styles.trendingList}>
+          {rank.data.slice(0, 10).map((snap, index) => <View className={`${styles.trendingItem} ${index === 0 ? styles.trendingFirst : index === 1 ? styles.trendingSecond : index === 2 ? styles.trendingThird : ''}`} key={snap.snapId} onClick={() => Taro.navigateTo({ url: `/pages/detail/index?id=${snap.snapId}` })}>
+            <View className={styles.trendingPosition}><Text className={styles.trendingNumber}>{String(index + 1).padStart(2, '0')}</Text>{index < 3 && <Text className={styles.trendingMedal}>{index === 0 ? '冠' : index === 1 ? '亚' : '季'}</Text>}</View>
+            <View className={styles.trendingCopy}>
+              <View className={styles.trendingMetaRow}><Text className={styles.trendingTag}>{categoryName(snap.type)}</Text><Text className={styles.trendingScore}>{(Number(snap.score) || 0).toLocaleString('zh-CN')} 热度</Text></View>
+              <Text className={styles.trendingDesc}>{snap.desc || '正在寻找同频的你'}</Text>
+              <Text className={styles.trendingMeta}>{snap.userName || '校园同学'} · {formatTime(snap.ctime)}</Text>
+            </View>
+            <Text className={styles.trendingItemArrow}>›</Text>
+          </View>)}
+        </ScrollView>
+        <View className={styles.trendingFoot}><Text>校园人气动态</Text><Text className={styles.trendingFootCount}>TOP {Math.min(rank.data.length, 10)}</Text></View>
+      </View> : null}
       {resource.error && <View className={styles.error}><Text>{resource.error}</Text><Text onClick={() => resource.reload()}>重试</Text></View>}
       {visible.length ? <View className={styles.grid}>{visible.map((snap) => <SnapCard key={snap.snapId} snap={snap} />)}</View> : !resource.loading && <View className={styles.empty}><Text className={styles.emptyTitle}>还没有找到内容</Text><Text>换个关键词，或者成为第一个发布的人。</Text></View>}
       {resource.loading && <Text className={styles.loading}>加载中…</Text>}

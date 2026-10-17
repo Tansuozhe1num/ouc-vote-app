@@ -1,1 +1,1 @@
-{"navigationBarTitleText":"个人资料","usingComponents":{"comp":"../../comp"}}
+{"navigationStyle":"custom","enablePullDownRefresh":true,"onReachBottomDistance":160,"usingComponents":{"comp":"../../comp"}}

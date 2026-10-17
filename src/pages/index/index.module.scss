@@ -22,17 +22,33 @@
 .chip { display:inline-block; min-height:60rpx; padding:14rpx 20rpx; margin-right:8rpx; border:0; border-radius:0; font-size:26rpx; color:$color-text-secondary; position:relative; }
 .active { color:$color-text-primary; font-weight:700; background:transparent; }
 .active::after { content:''; position:absolute; left:50%; bottom:-3rpx; width:36rpx; height:6rpx; transform:translateX(-50%); border-radius:6rpx; background:$color-primary; }
-.trending { margin:0 0 26rpx; background:#fff; border-radius:14rpx; padding:20rpx; box-shadow:0 5rpx 20rpx rgba(0,0,0,.035); }
-.trendingHead { display:flex; align-items:center; justify-content:space-between; margin-bottom:14rpx; }
-.trendingTitle { font-size:28rpx; font-weight:700; }
-.trendingMore { color:$color-primary; font-size:22rpx; }
-.trendingList { white-space:nowrap; width:100%; }
-.trendingItem { display:inline-flex; flex-direction:column; vertical-align:top; width:260rpx; padding-right:24rpx; margin-right:20rpx; border-right:1rpx solid $color-divider; white-space:normal; }
-.trendingItem:last-child { border-right:0; }
-.trendingNumber { color:$color-primary; font-weight:800; font-size:25rpx; }
-.trendingTag { color:$color-primary-dark; font-size:20rpx; margin-top:8rpx; }
-.trendingDesc { font-size:24rpx; line-height:1.5; margin-top:6rpx; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
-.trendingMeta { color:$color-text-tertiary; font-size:19rpx; margin-top:8rpx; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.trending { margin:0 0 28rpx; padding:22rpx 20rpx 0; overflow:hidden; border:1rpx solid #f0e6e1; border-radius:16rpx; background:linear-gradient(145deg,#fff 0%,#fffaf8 100%); box-shadow:0 8rpx 28rpx rgba(91,48,35,.055); box-sizing:border-box; }
+.trendingHead { display:flex; align-items:center; justify-content:space-between; gap:16rpx; margin-bottom:12rpx; }
+.trendingKicker { display:block; margin-bottom:6rpx; color:#be7765; font-size:16rpx; font-weight:800; line-height:1.2; }
+.trendingTitleRow { display:flex; align-items:center; gap:12rpx; }
+.trendingTitle { color:#332c29; font-size:30rpx; font-weight:750; line-height:1.2; }
+.trendingLive { display:inline-flex; align-items:center; gap:7rpx; padding:5rpx 10rpx; border-radius:18rpx; color:#768d7e; background:#eff6ef; font-size:17rpx; line-height:1.2; }
+.trendingLiveDot { width:9rpx; height:9rpx; border-radius:50%; background:#66b27c; }
+.trendingMore { flex:none; color:$color-primary; font-size:21rpx; }
+.trendingArrow { margin-left:2rpx; font-size:30rpx; vertical-align:-2rpx; }
+.trendingList { width:100%; height:472rpx; box-sizing:border-box; }
+.trendingItem { display:flex; align-items:center; gap:14rpx; width:100%; min-height:112rpx; padding:12rpx 2rpx; border-bottom:1rpx solid #f2eae6; box-sizing:border-box; }
+.trendingItem:last-child { border-bottom:0; }
+.trendingPosition { display:flex; flex:0 0 54rpx; flex-direction:column; align-items:center; justify-content:center; gap:2rpx; }
+.trendingNumber { color:#a59a95; font-family:Georgia,serif; font-size:32rpx; font-weight:700; line-height:1; }
+.trendingMedal { color:#c4904d; font-size:15rpx; line-height:1.2; }
+.trendingFirst .trendingNumber { color:#df624d; }
+.trendingSecond .trendingNumber { color:#8d82a7; }
+.trendingThird .trendingNumber { color:#bf8065; }
+.trendingCopy { flex:1; min-width:0; }
+.trendingMetaRow { display:flex; align-items:center; justify-content:space-between; gap:8rpx; margin-bottom:5rpx; }
+.trendingTag { flex:none; padding:4rpx 9rpx; border-radius:7rpx; color:#a86753; background:#fff0e9; font-size:17rpx; line-height:1.3; }
+.trendingScore { overflow:hidden; color:#c47a62; font-size:17rpx; text-overflow:ellipsis; white-space:nowrap; }
+.trendingDesc { display:block; overflow:hidden; color:#39312e; font-size:23rpx; font-weight:600; line-height:1.45; text-overflow:ellipsis; white-space:nowrap; }
+.trendingMeta { display:block; overflow:hidden; margin-top:3rpx; color:#a69a94; font-size:17rpx; line-height:1.3; text-overflow:ellipsis; white-space:nowrap; }
+.trendingItemArrow { flex:none; color:#c5b4ac; font-size:34rpx; line-height:1; }
+.trendingFoot { display:flex; align-items:center; justify-content:space-between; height:44rpx; border-top:1rpx solid #f4eeeb; color:#ac9d96; font-size:17rpx; }
+.trendingFootCount { color:#c47a62; font-family:Georgia,serif; font-size:16rpx; font-weight:700; }
 .grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24rpx 16rpx; align-items:start; }
 .error { display:flex; justify-content:space-between; gap:16rpx; color:#c71937; background:$color-primary-light; border-radius:10rpx; padding:20rpx 24rpx; margin:16rpx 0; }
 .empty { text-align:center; padding:80rpx 24rpx; color:$color-text-secondary; line-height:1.8; }

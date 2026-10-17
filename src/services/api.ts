@@ -2,7 +2,7 @@ import Taro from '@tarojs/taro';
 import type { Captcha, Comment, Conversation, Envelope, Fields, Message, Snap, User } from '@/types/domain';
 import { demoSnaps } from '@/data/snaps';
 import { getBaseUrl, isDemo } from './config';
-import { clearSession, getToken, saveToken, saveUser } from './session';
+import { clearSession, getToken, getUser, saveToken, saveUser } from './session';
 import { encodeFields, expiredCode, extractToken } from './protocol';
 
 const demoOnly = () => { throw new Error('网页为只读演示，请在小程序中连接服务后操作'); };
@@ -16,7 +16,6 @@ const decode = <T,>(body: Envelope<T>, status: number): T => {
 const request = async <T,>(path: string, fields: Fields = {}, method: 'GET' | 'POST' = 'GET', headers: Record<string, string> = {}): Promise<T> => {
   if (isDemo) return demoOnly();
   const base = getBaseUrl();
-  if (!base) throw new Error('请先在“我的 → 服务设置”配置后端地址');
   const token = getToken();
   console.info('[API]', method, path);
   try {
@@ -27,7 +26,6 @@ const request = async <T,>(path: string, fields: Fields = {}, method: 'GET' | 'P
       timeout: 15000,
       header: { 'Content-Type': 'application/x-www-form-urlencoded', ...(token ? { Authorization: `Bearer ${token}` } : {}), ...headers }
     });
-    if (base !== getBaseUrl()) throw new Error('服务地址已更改，请重试');
     const data = decode(result.data, result.statusCode);
     if (path === '/auth/login' || path === '/auth/register') {
       const rawCookies: string[] = [...(result.cookies || [])];
@@ -66,10 +64,18 @@ export const api = {
   captcha: (): Promise<Captcha> => request('/auth/captcha'),
   async login(fields: Fields, register: boolean): Promise<User> {
     const user = await request<User>(register ? '/auth/register' : '/auth/login', fields, 'POST');
-    saveUser(user);
-    return user;
+    const loginName = typeof fields.loginName === 'string' ? fields.loginName.trim() : user.loginName;
+    const signedInUser = loginName ? { ...user, loginName } : user;
+    saveUser(signedInUser);
+    return signedInUser;
   },
-  async me(): Promise<User> { const user = await request<User>('/auth/me'); saveUser(user); return user; },
+  async me(): Promise<User> {
+    const user = await request<User>('/auth/me');
+    const loginName = user.loginName || getUser()?.loginName;
+    const currentUser = loginName ? { ...user, loginName } : user;
+    saveUser(currentUser);
+    return currentUser;
+  },
   async logout() {
     try { await request('/auth/logout', {}, 'POST'); } finally { clearSession(); }
   },
@@ -82,7 +88,11 @@ export const api = {
     return request('/user/profile', { userId: id });
   },
   async updateProfile(fields: Fields): Promise<User> {
-    const user = await request<User>('/user/profile', fields, 'POST'); saveUser(user); return user;
+    const user = await request<User>('/user/profile', fields, 'POST');
+    const loginName = getUser()?.loginName;
+    const updatedUser = loginName ? { ...user, loginName } : user;
+    saveUser(updatedUser);
+    return updatedUser;
   },
   following: (): Promise<User[]> => request('/follow/following'),
   followers: (): Promise<User[]> => request('/follow/followers'),
@@ -99,14 +109,12 @@ export const api = {
     if (!filePath) return request('/snap/save', { desc, type }, 'POST', { 'Idempotency-Key': key });
     if (isDemo) return demoOnly();
     const base = getBaseUrl();
-    if (!base) throw new Error('请先配置后端地址');
     console.info('[Upload] Publishing image');
     try {
       const result = await Taro.uploadFile({
         url: base + '/snap/save', filePath, name: 'avatar', formData: { desc, type: String(type) },
         header: { Authorization: `Bearer ${getToken()}`, 'Idempotency-Key': key }, timeout: 60000
       });
-      if (base !== getBaseUrl()) throw new Error('服务地址已更改，请重试');
       if (expiredCode(result.statusCode)) clearSession();
       let body: Envelope<Snap>;
       try { body = JSON.parse(result.data) as Envelope<Snap>; }

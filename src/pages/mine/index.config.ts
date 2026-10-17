@@ -1,1 +1,1 @@
-export default definePageConfig({ navigationBarTitleText: '我的', enablePullDownRefresh: true });
+export default definePageConfig({ navigationStyle: 'custom', enablePullDownRefresh: true, onReachBottomDistance: 160 });

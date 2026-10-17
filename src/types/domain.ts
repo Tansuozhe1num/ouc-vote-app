@@ -1,6 +1,6 @@
 export interface Envelope<T> { status: string; code: number; info?: string; data: T }
 export interface User {
-  id?: string; userId: string; name: string; description?: string; major?: string; sex?: number;
+  id?: string; userId: string; name: string; loginName?: string; description?: string; major?: string; sex?: number;
 }
 export interface Snap {
   snapId: number; userId: string; snapImage?: string; type: number; ctime: string;

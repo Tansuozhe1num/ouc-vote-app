@@ -1,1 +1,1 @@
-export default definePageConfig({ navigationBarTitleText: '个人资料' });
+export default definePageConfig({ navigationStyle: 'custom', enablePullDownRefresh: true, onReachBottomDistance: 160 });

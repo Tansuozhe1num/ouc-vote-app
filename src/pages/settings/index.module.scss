@@ -1,2 +1,11 @@
 @use '@/styles/variables.scss' as *;
-.page{padding:48rpx 32rpx;min-height:100vh;background:$color-bg-page}.title{display:block;font-size:44rpx;font-weight:700}.sub{display:block;color:$color-text-secondary;line-height:1.8;margin:16rpx 0 48rpx}.label{display:block;font-weight:600;margin-bottom:16rpx}.input{height:96rpx;width:100%;box-sizing:border-box;background:#fff;border:1rpx solid $color-border;border-radius:16rpx;padding:0 24rpx}.notice{display:block;color:#9a583d;background:#fff0df;font-size:22rpx;line-height:1.7;padding:16rpx 24rpx;border-radius:12rpx;margin-top:24rpx}.button,.secondary{border-radius:48rpx;margin-top:32rpx}.button{background:$color-primary;color:#fff}.secondary{background:#fff;border:1rpx solid $color-border;color:#b13b2c}
+
+.page { min-height:100vh; padding:48rpx 32rpx; color:$color-text-primary; background:$color-bg-page; box-sizing:border-box; }
+.title { display:block; font-size:40rpx; font-weight:700; }
+.sub { display:block; margin:12rpx 0 36rpx; color:$color-text-secondary; font-size:24rpx; line-height:1.7; }
+.account { padding:28rpx 24rpx; border:1rpx solid $color-border; border-radius:12rpx; background:#fff; }
+.accountLabel { display:block; color:$color-text-secondary; font-size:22rpx; }
+.accountName { display:block; color:#262626; font-size:30rpx; font-weight:700; }
+.accountId { display:block; margin-top:8rpx; color:$color-text-tertiary; font-size:22rpx; }
+.secondary { width:100%; height:72rpx; margin-top:28rpx; border:1rpx solid $color-border; border-radius:8rpx; color:#333; background:#fff; font-size:24rpx; line-height:70rpx; }
+.secondary::after { border:0; }
